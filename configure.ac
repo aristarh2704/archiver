@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([archivator], [0.1], [fe.arik@yandex.ru])
+AC_INIT([archivator], [0.2], [fe.arik@yandex.ru])
 AC_CONFIG_SRCDIR([main.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE()

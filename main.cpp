@@ -62,10 +62,10 @@ int main(int argc,char *argv[]) {
     FILE *b=fopen(argv[3],"wb");
     unsigned sizeTFile;
     rwFile *myRw;
-    if(mode){
+    if(mode) {
         fread(&sizeTFile,4,1,a);
         myRw=new rwFile(a,b,sizeTFile,BLOCK,1);
-    }else{
+    } else {
         struct stat myStat;
         stat(argv[2],&myStat);
         sizeTFile=myStat.st_size;
@@ -75,14 +75,14 @@ int main(int argc,char *argv[]) {
 
     context myContext(DEEP,BLOCK,WINDOW,myRw->textFile->block);
     haffman myHaffman(&myContext,myRw);
-    while(sizeTFile!=0){
-        if(mode){
+    while(sizeTFile!=0) {
+        if(mode) {
             myHaffman.decode();
-        }else{
+        } else {
             myHaffman.code();
         }
         sizeTFile--;
-        if(sizeTFile%1000==0){
+        if(sizeTFile%1000==0) {
             printf("%d\n",sizeTFile);
         }
     }

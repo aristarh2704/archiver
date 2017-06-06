@@ -103,7 +103,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_compressor_OBJECTS = context.$(OBJEXT) main.$(OBJEXT) rw.$(OBJEXT) \
-	haffman.$(OBJEXT) fifo.$(OBJEXT) file.$(OBJEXT)
+	haffman.$(OBJEXT) file.$(OBJEXT)
 compressor_OBJECTS = $(am_compressor_OBJECTS)
 compressor_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -291,7 +291,6 @@ compressor_SOURCES = context.cpp context.h\
 	main.cpp main.h\
 	rw.cpp rw.h \
 	haffman.cpp haffman.h \
-	fifo.cpp fifo.h \
 	file.cpp file.h
 
 all: config.h
@@ -401,7 +400,6 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/context.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fifo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/haffman.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

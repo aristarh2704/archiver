@@ -18,16 +18,16 @@
 */
 #include "haffman.h"
 
-struct node{
+struct node {
     int64_t iCount;
     int next;
 };
 
-haffman::haffman(context *oContext, rwFile *oRw){
+haffman::haffman(context *oContext, rwFile *oRw) {
     iContext=oContext;
     iRw=oRw;
 }
-void haffman::code(){
+void haffman::code() {
     unsigned pointerToA,pointerToB,pointerToC;
     uint64_t a,b,c;
     int symbol=iRw->readByte()+1;
@@ -37,12 +37,12 @@ void haffman::code(){
     iContext->createTable();
     iContext->add();
     node table[257];
-    for(int i=0;i<256;i++){
+    for(int i=0; i<256; i++) {
         table[i+1].iCount=iTable[i];
         table[i].next=i+1;
     }
     table[256].next=0;
-    while(table[current].next!=0){
+    while(table[current].next!=0) {
         // Сканирование минимумов
         pointerToA=0;
         aNode=table[0].next;
@@ -52,17 +52,17 @@ void haffman::code(){
         b=table[bNode].iCount;
         pointerToC=bNode;
         cNode=table[pointerToC].next;
-        while(cNode){
+        while(cNode) {
             c=table[cNode].iCount;
-            if(a>c && a>b){
+            if(a>c && a>b) {
                 pointerToA=pointerToB;
                 aNode=bNode;
                 a=b;
                 pointerToB=pointerToC;
                 bNode=cNode;
                 b=c;
-            }else{
-                if(b>c){
+            } else {
+                if(b>c) {
                     pointerToB=pointerToC;
                     bNode=cNode;
                     b=c;
@@ -71,9 +71,9 @@ void haffman::code(){
             pointerToC=cNode;
             cNode=table[pointerToC].next;
         }
-        if(symbol==aNode){
+        if(symbol==aNode) {
             iRw->writeBit(0);
-        }else if(symbol==bNode){
+        } else if(symbol==bNode) {
             symbol=aNode;
             iRw->writeBit(1);
         }
@@ -86,12 +86,12 @@ void haffman::code(){
     }
     iRw->endBits();
 }
-struct dNode{
+struct dNode {
     int64_t iCount;
     int next;
     int children[2];
 };
-void haffman::decode(){
+void haffman::decode() {
     unsigned pointerToA,pointerToB,pointerToC;
     uint64_t a,b,c;
     int aNode,bNode,cNode;
@@ -100,12 +100,12 @@ void haffman::decode(){
     dNode table[512];
     unsigned *iTable=iContext->table;
     iContext->createTable();
-    for(int i=0;i<256;i++){
+    for(int i=0; i<256; i++) {
         table[i+1].iCount=iTable[i];
         table[i].next=i+1;
     }
     table[256].next=0;
-    while(table[current].next!=0){
+    while(table[current].next!=0) {
         // Сканирование минимумов
         pointerToA=0;
         aNode=table[0].next;
@@ -115,17 +115,17 @@ void haffman::decode(){
         b=table[bNode].iCount;
         pointerToC=bNode;
         cNode=table[pointerToC].next;
-        while(cNode){
+        while(cNode) {
             c=table[cNode].iCount;
-            if(a>c && a>b){
+            if(a>c && a>b) {
                 pointerToA=pointerToB;
                 aNode=bNode;
                 a=b;
                 pointerToB=pointerToC;
                 bNode=cNode;
                 b=c;
-            }else{
-                if(b>c){
+            } else {
+                if(b>c) {
                     pointerToB=pointerToC;
                     bNode=cNode;
                     b=c;
@@ -145,7 +145,7 @@ void haffman::decode(){
         iSize++;
     }
     current=iSize-1;
-    while(current>256){
+    while(current>256) {
         uchar temp=iRw->readBit();
         current=table[current].children[temp];
     }

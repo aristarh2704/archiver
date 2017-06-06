@@ -1,10 +1,8 @@
 #ifndef CONTEXT_H_INCLUDED
 #define CONTEXT_H_INCLUDED
-
 #include "main.h"
-#include "fifo.h"
 
-class context{
+class context {
     char *indexes;
     uchar *buffer;
     unsigned deep; /* Глубина контекста */

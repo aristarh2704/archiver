@@ -4,7 +4,7 @@
 #include "context.h"
 #include "rw.h"
 
-class haffman{
+class haffman {
     context *iContext;
     rwFile *iRw;
 public:

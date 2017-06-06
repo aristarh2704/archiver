@@ -7,7 +7,7 @@
 #define I_READ 0
 #define I_WRITE 1
 
-class rwFile{
+class rwFile {
     uchar iBuffer; /* Входной буффер */
     uchar sIBuffer; /* Кол-во бит во входном буффере */
     uchar oBuffer[32]; /* Выходной буффер */

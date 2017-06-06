@@ -19,27 +19,27 @@
 #include "context.h"
 #include <string.h>
 
-context::context(unsigned int ord,unsigned iBlock,unsigned iWindow,uchar *iBuffer){
+context::context(unsigned int ord,unsigned iBlock,unsigned iWindow,uchar *iBuffer) {
     size=0;
     indexes=new char[deep+1];
     block=iBlock;
     window=iWindow;
     deep=ord;
     buffer=iBuffer;
-    for(int i=0;i<256;i++){
+    for(int i=0; i<256; i++) {
         table[i]=0;
     }
 }
-context::~context(){
+context::~context() {
     delete[] indexes;
 }
-void context::add(){
+void context::add() {
     size++;
     if(size>block)
         size=0;
     table[buffer[size]]++;
 }
-void context::createTable(){
+void context::createTable() {
     /*
     uchar *pWindow=&buffer[size-1];
     for(int i=0;i<deep;i++){

@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-class file{
+class file {
     unsigned sizeBlock;
     unsigned count;
     char mode;

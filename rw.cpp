@@ -19,12 +19,12 @@
 #include "rw.h"
 #include <stdio.h>
 
-uchar rwFile::readBit(){
-    if(posInText==sizeTextFile){
+uchar rwFile::readBit() {
+    if(posInText==sizeTextFile) {
         printf("Warning 1\n");
         return 0;
     }
-    if(sIBuffer==0){
+    if(sIBuffer==0) {
         iBuffer=binarFile->get();
         sIBuffer=8;
     }
@@ -34,7 +34,7 @@ uchar rwFile::readBit(){
     return temp;
 }
 
-rwFile::rwFile(FILE *binFile,FILE *tFile,unsigned int tSize,unsigned sizeBlock,char stream){
+rwFile::rwFile(FILE *binFile,FILE *tFile,unsigned int tSize,unsigned sizeBlock,char stream) {
     sIBuffer=0;
     sOBuffer=0;
     posInText=0;
@@ -43,19 +43,19 @@ rwFile::rwFile(FILE *binFile,FILE *tFile,unsigned int tSize,unsigned sizeBlock,c
     textFile=new file(tFile,stream,sizeBlock);
 }
 
-void rwFile::writeBit(uchar bit){
+void rwFile::writeBit(uchar bit) {
     uchar temp=oBuffer[sOBuffer/8];
-    if(bit){
+    if(bit) {
         temp|=(1<<sOBuffer%8);
-    }else{
+    } else {
         temp&=~(1<<sOBuffer%8);
     }
     oBuffer[sOBuffer/8]=temp;
     sOBuffer++;
 }
 
-uchar rwFile::readByte(){
-    if(posInText==sizeTextFile){
+uchar rwFile::readByte() {
+    if(posInText==sizeTextFile) {
         printf("Warning 2\n");
         return 0;
     }
@@ -64,8 +64,8 @@ uchar rwFile::readByte(){
     return temp;
 }
 
-void rwFile::writeByte(uchar byte){
-    if(posInText==sizeTextFile){
+void rwFile::writeByte(uchar byte) {
+    if(posInText==sizeTextFile) {
         printf("Warning 3\n");
         return;
     }
@@ -73,8 +73,8 @@ void rwFile::writeByte(uchar byte){
     posInText++;
 }
 
-void rwFile::endBits(){
-    for(short i=sOBuffer-1;i>=0;i--){
+void rwFile::endBits() {
+    for(short i=sOBuffer-1; i>=0; i--) {
         uchar temp1=oBuffer[i/8];
         uchar temp2=temp1&(1<<(i%8));
         temp2=temp2>>(i%8);
@@ -83,21 +83,21 @@ void rwFile::endBits(){
     sOBuffer=0;
 }
 
-void rwFile::writeBuffer(uchar bit){
-    if(bit){
+void rwFile::writeBuffer(uchar bit) {
+    if(bit) {
         iBuffer|=(1<<sIBuffer);
-    }else{
+    } else {
         iBuffer&=~(1<<sIBuffer);
     }
     sIBuffer++;
-    if(sIBuffer==8){
+    if(sIBuffer==8) {
         sIBuffer=0;
         binarFile->put(iBuffer);
     }
 }
 
-rwFile::~rwFile(){
-    if(sIBuffer!=0){
+rwFile::~rwFile() {
+    if(sIBuffer!=0) {
         binarFile->put(iBuffer);
     }
     delete binarFile;

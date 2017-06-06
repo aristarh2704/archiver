@@ -19,25 +19,25 @@
 #include "main.h"
 #include "file.h"
 
-file::file(FILE *iFile,char iMode,unsigned size){
+file::file(FILE *iFile,char iMode,unsigned size) {
     sizeBlock=size;
     mode=iMode;
     block=new uchar[size];
     count=0;
     bFile=iFile;
-    if(!mode){
+    if(!mode) {
         int temp=fread(block,1,size,iFile);
     }
 }
 
-file::~file(){
-    if(mode){
+file::~file() {
+    if(mode) {
         fwrite(block,1,count,bFile);
     }
 }
 
-uchar file::get(){
-    if(count==sizeBlock){
+uchar file::get() {
+    if(count==sizeBlock) {
         fread(block,1,sizeBlock,bFile);
         count=0;
     }
@@ -46,8 +46,8 @@ uchar file::get(){
 
 }
 
-void file::put(uchar symbol){
-    if(count==sizeBlock){
+void file::put(uchar symbol) {
+    if(count==sizeBlock) {
         fwrite(block,1,sizeBlock,bFile);
         count=0;
     }
