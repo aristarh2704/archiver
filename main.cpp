@@ -23,6 +23,7 @@
 #include "context.h"
 #include "haffman.h"
 #include "rw.h"
+#include "buffer.h"
 
 #define BLOCK 0xFFFFFF
 #define WINDOW 0xFFF
@@ -62,19 +63,22 @@ int main(int argc,char *argv[]) {
     FILE *b=fopen(argv[3],"wb");
     unsigned sizeTFile;
     rwFile *myRw;
+    buffer *binBuffer,*textBuffer;
     if(mode) {
         fread(&sizeTFile,4,1,a);
-        myRw=new rwFile(a,b,sizeTFile,BLOCK,1);
+        binBuffer=new buffer(a,0,BLOCK);
+        textBuffer=new buffer(b,1,BLOCK);
     } else {
         struct stat myStat;
         stat(argv[2],&myStat);
         sizeTFile=myStat.st_size;
         fwrite(&sizeTFile,4,1,b);
-        myRw=new rwFile(b,a,sizeTFile,BLOCK,0);
+        binBuffer=new buffer(b,1,BLOCK);
+        textBuffer=new buffer(a,0,BLOCK);
     }
-
-    context myContext(DEEP,BLOCK,WINDOW,myRw->textFile->block);
-    haffman myHaffman(&myContext,myRw);
+    myRw=new rwFile(binBuffer);
+    context myContext(DEEP,WINDOW,textBuffer);
+    haffman myHaffman(&myContext,myRw,textBuffer);
     while(sizeTFile!=0) {
         if(mode) {
             myHaffman.decode();
@@ -87,6 +91,8 @@ int main(int argc,char *argv[]) {
         }
     }
     delete myRw;
+    delete binBuffer;
+    delete textBuffer;
     fclose(a);
     fclose(b);
 }

@@ -20,12 +20,8 @@
 #include <stdio.h>
 
 uchar rwFile::readBit() {
-    if(posInText==sizeTextFile) {
-        printf("Warning 1\n");
-        return 0;
-    }
     if(sIBuffer==0) {
-        iBuffer=binarFile->get();
+        iBuffer=binBuffer->get();
         sIBuffer=8;
     }
     uchar temp=iBuffer%2;
@@ -34,13 +30,10 @@ uchar rwFile::readBit() {
     return temp;
 }
 
-rwFile::rwFile(FILE *binFile,FILE *tFile,unsigned int tSize,unsigned sizeBlock,char stream) {
+rwFile::rwFile(buffer *iBuffer) {
     sIBuffer=0;
     sOBuffer=0;
-    posInText=0;
-    sizeTextFile=tSize;
-    binarFile=new file(binFile,!stream,sizeBlock);
-    textFile=new file(tFile,stream,sizeBlock);
+    binBuffer= iBuffer;
 }
 
 void rwFile::writeBit(uchar bit) {
@@ -52,25 +45,6 @@ void rwFile::writeBit(uchar bit) {
     }
     oBuffer[sOBuffer/8]=temp;
     sOBuffer++;
-}
-
-uchar rwFile::readByte() {
-    if(posInText==sizeTextFile) {
-        printf("Warning 2\n");
-        return 0;
-    }
-    uchar temp=textFile->get();
-    posInText++;
-    return temp;
-}
-
-void rwFile::writeByte(uchar byte) {
-    if(posInText==sizeTextFile) {
-        printf("Warning 3\n");
-        return;
-    }
-    textFile->put(byte);
-    posInText++;
 }
 
 void rwFile::endBits() {
@@ -92,14 +66,12 @@ void rwFile::writeBuffer(uchar bit) {
     sIBuffer++;
     if(sIBuffer==8) {
         sIBuffer=0;
-        binarFile->put(iBuffer);
+        binBuffer->put(iBuffer);
     }
 }
 
 rwFile::~rwFile() {
     if(sIBuffer!=0) {
-        binarFile->put(iBuffer);
+        binBuffer->put(iBuffer);
     }
-    delete binarFile;
-    delete textFile;
 }

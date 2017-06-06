@@ -7,8 +7,9 @@
 class haffman {
     context *iContext;
     rwFile *iRw;
+    buffer *iTextBuffer;
 public:
-    haffman(context*,rwFile*);
+    haffman(context*,rwFile*,buffer*);
     void code();
     void decode();
 };

@@ -18,14 +18,15 @@
 */
 #include "context.h"
 #include <string.h>
+#include "buffer.h"
 
-context::context(unsigned int ord,unsigned iBlock,unsigned iWindow,uchar *iBuffer) {
+context::context(unsigned int ord,unsigned iWindow,buffer *iBuffer) {
     size=0;
     indexes=new char[deep+1];
-    block=iBlock;
+    block=iBuffer->sizeBlock;
     window=iWindow;
     deep=ord;
-    buffer=iBuffer;
+    pBlock=iBuffer->block;
     for(int i=0; i<256; i++) {
         table[i]=0;
     }
@@ -34,10 +35,10 @@ context::~context() {
     delete[] indexes;
 }
 void context::add() {
-    size++;
     if(size>block)
         size=0;
-    table[buffer[size]]++;
+    table[pBlock[size]]++;
+    size++;
 }
 void context::createTable() {
     /*

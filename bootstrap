@@ -1,0 +1,9 @@
+#!/bin/sh
+touch aclocal.m4
+touch Makefile.in
+touch configure
+touch config.status
+touch Makefile
+touch config.h.in
+touch stamp-h1
+echo Done.

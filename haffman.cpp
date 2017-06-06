@@ -23,19 +23,26 @@ struct node {
     int next;
 };
 
-haffman::haffman(context *oContext, rwFile *oRw) {
+haffman::haffman(context *oContext, rwFile *oRw,buffer *oTextBuffer) {
     iContext=oContext;
     iRw=oRw;
+    iTextBuffer=oTextBuffer;
 }
 void haffman::code() {
     unsigned pointerToA,pointerToB,pointerToC;
     uint64_t a,b,c;
-    int symbol=iRw->readByte()+1;
+    int symbol=iTextBuffer->get()+1;
+    printf("Symbol: %d\n",symbol-1);
     int aNode,bNode,cNode;
     unsigned current=1;
     unsigned *iTable=iContext->table;
     iContext->createTable();
     iContext->add();
+    printf("Dump table: ");
+    for(int i=0; i<256; i++) {
+        printf("%d ",iTable[i]);
+    }
+    printf("\n");
     node table[257];
     for(int i=0; i<256; i++) {
         table[i+1].iCount=iTable[i];
@@ -149,7 +156,8 @@ void haffman::decode() {
         uchar temp=iRw->readBit();
         current=table[current].children[temp];
     }
-    iRw->writeByte(current-1);
+    printf("Writing %d\n",current-1);
+    iTextBuffer->put(current-1);
     iContext->add();
 }
 

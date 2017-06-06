@@ -103,7 +103,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_compressor_OBJECTS = context.$(OBJEXT) main.$(OBJEXT) rw.$(OBJEXT) \
-	haffman.$(OBJEXT) file.$(OBJEXT)
+	haffman.$(OBJEXT) buffer.$(OBJEXT)
 compressor_OBJECTS = $(am_compressor_OBJECTS)
 compressor_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -287,11 +287,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+EXTRA_DIST = bootstrap
 compressor_SOURCES = context.cpp context.h\
 	main.cpp main.h\
 	rw.cpp rw.h \
 	haffman.cpp haffman.h \
-	file.cpp file.h
+	buffer.cpp buffer.h
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -399,8 +400,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/buffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/context.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/haffman.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rw.Po@am__quote@

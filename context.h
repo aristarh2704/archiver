@@ -1,15 +1,17 @@
 #ifndef CONTEXT_H_INCLUDED
 #define CONTEXT_H_INCLUDED
+
 #include "main.h"
+#include "buffer.h"
 
 class context {
     char *indexes;
-    uchar *buffer;
+    uchar *pBlock;
     unsigned deep; /* Глубина контекста */
     unsigned block; /* Размер блока */
     unsigned window; /* Размер окна */
 public:
-    context(unsigned  /* Глубина */,unsigned /* Размер блока */,unsigned /*Размер окна */,uchar* /* Указатель на буфер */);
+    context(unsigned  /* Глубина */,unsigned /*Размер окна */,buffer* /* Указатель на буфер */);
     ~context();
     void add();
     void createTable();
