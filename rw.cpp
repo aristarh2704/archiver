@@ -30,13 +30,14 @@ uchar rwFile::readBit() {
     return temp;
 }
 
-rwFile::rwFile(buffer *iBuffer) {
+rwFile::rwFile(buffer *binBuff) {
     sIBuffer=0;
     sOBuffer=0;
-    binBuffer= iBuffer;
+    binBuffer= binBuff;
 }
 
 void rwFile::writeBit(uchar bit) {
+    //printf("%d",bit);
     uchar temp=oBuffer[sOBuffer/8];
     if(bit) {
         temp|=(1<<sOBuffer%8);
@@ -48,6 +49,7 @@ void rwFile::writeBit(uchar bit) {
 }
 
 void rwFile::endBits() {
+    //printf("\n");
     for(short i=sOBuffer-1; i>=0; i--) {
         uchar temp1=oBuffer[i/8];
         uchar temp2=temp1&(1<<(i%8));

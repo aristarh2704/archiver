@@ -27,7 +27,6 @@ buffer::buffer(FILE *iFile,char iMode,unsigned size) {
     wPos=0;
     bFile=iFile;
     if(!mode && bFile) {
-        fseek(iFile,0,SEEK_SET);
         int temp=fread(block,1,size,iFile);
     }
 }

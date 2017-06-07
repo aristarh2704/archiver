@@ -13,7 +13,6 @@ class rwFile {
     uchar oBuffer[32]; /* Выходной буффер */
     short sOBuffer; /* Кол-во бит в выходном буффере */
     void writeBuffer(uchar);
-    buffer *binBuffer;
 public:
     /** \brief
      *
@@ -23,6 +22,7 @@ public:
      */
     rwFile(buffer *binBuff);
     ~rwFile();
+    buffer *binBuffer;
     uchar readBit();
     void writeBit(uchar);
     void endBits();
